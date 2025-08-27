@@ -10,10 +10,10 @@ const generateImage = async (req,res)=>{
         const user = await userModel.findById(userId)
 
         if (!user||!prompt) {
-            res.json({success:false,message:"Missing details"})
+            return res.json({success:false,message:"Missing details"})
         }
 
-        if (user.creditBalance===0 || userModel.creditBalance <0) {
+        if (user.creditBalance===0 || user.creditBalance <0) {
             return  res.json({success:false,message:"No credit Balance", creditBalance:user.creditBalance});
         }
 

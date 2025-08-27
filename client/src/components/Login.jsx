@@ -80,7 +80,7 @@ const Login = () => {
 
         {state !== 'Login' &&
           <div className='border px-6 py-2 flex items-center gap-2 rounded-full mt-5'>
-            <img src={assets.user_icon} alt="" />
+            <img src={assets.profile_icon} alt="" />
             <input type="text" placeholder='Full Name' onChange={e => setName(e.target.value)} value={name} required className='outline-none text-sm' />
           </div>
         }

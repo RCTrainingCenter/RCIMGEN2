@@ -4,9 +4,20 @@ import jwt from 'jsonwebtoken'
 
 const registerUser = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    let { name, email, password } = req.body;
+
     if (!name || !email || !password) {
       return res.json({ success: false, message: "Missing Details" });
+    }
+
+    // Normalize inputs
+    name = String(name).trim();
+    email = String(email).trim().toLowerCase();
+
+    // Check for existing user with same email
+    const existingUser = await userModel.findOne({ email });
+    if (existingUser) {
+      return res.json({ success: false, message: "Email already registered. Please log in." });
     }
 
     const salt = await bcrypt.genSalt(10);

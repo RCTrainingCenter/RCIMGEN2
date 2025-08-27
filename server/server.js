@@ -8,7 +8,15 @@ import Stripe from 'stripe';
 import userModel from './models/userModel.js';
 
 const PORT = process.env.PORT || 4000;
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+// Ensure Stripe is configured with a valid secret key
+const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
+if (!stripeSecretKey) {
+    console.error('Missing STRIPE_SECRET_KEY environment variable. Set it in server/.env');
+    process.exit(1);
+}
+const stripe = new Stripe(stripeSecretKey, {
+    apiVersion: '2024-06-20'
+});
 const app = express();
 
 app.use(express.json());
